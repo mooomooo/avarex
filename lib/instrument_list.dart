@@ -281,9 +281,9 @@ class InstrumentListState extends State<InstrumentList> {
   // make an instrument for top line
   Widget _makeInstrument(int index) {
     bool portrait = Constants.isPortrait(context);
-    double width = Constants.screenWidth(context) / 9.7 / Storage().settings.getInstrumentScaleFactor(); // get more instruments in
+    double width = Constants.screenWidth(context) / 9.7 / (2 * Storage().settings.getInstrumentScaleFactor()); // get more instruments in
     if(portrait) {
-      width = Constants.screenWidth(context) / 5.7 / Storage().settings.getInstrumentScaleFactor();
+      width = Constants.screenWidth(context) / 5.7 / (2 * Storage().settings.getInstrumentScaleFactor());
     }
 
     String value = "";
