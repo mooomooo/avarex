@@ -115,11 +115,27 @@ class WritingScreenState extends State<WritingScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        _buildPointerModeSwitcher(context),
         _buildColorButton(context, color: Theme.of(context).brightness == Brightness.light ? Colors.black: Colors.white),
         _buildColorButton(context, color: Colors.red),
         _buildColorButton(context, color: Colors.green),
         _buildEraserButton(context),
       ],
+    );
+  }
+
+  Widget _buildPointerModeSwitcher(BuildContext context) {
+    return ValueListenableBuilder(
+        valueListenable: notifier.select(
+          (value) => value.allowedPointersMode == ScribblePointerMode.all
+        ),
+        builder: (context, value, child) => ColorButton(
+          color: Colors.transparent,
+          outlineColor: Theme.of(context).brightness == Brightness.light ? Colors.black: Colors.white,
+          isActive: value,
+          onPressed: ()  {value ? notifier.setAllowedPointersMode(ScribblePointerMode.penOnly) : notifier.setAllowedPointersMode(ScribblePointerMode.all);},
+          child: const Icon(Icons.touch_app),
+        ),
     );
   }
 
