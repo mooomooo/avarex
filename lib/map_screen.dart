@@ -44,6 +44,7 @@ class MapScreen extends StatefulWidget {
 class MapScreenState extends State<MapScreen> {
 
   static const double iconRadius = 18;
+  static const double iconBorder = 3;
 
   final List<String> _charts = DownloadScreenState.getCategories();
   LatLng? _previousPosition;
@@ -1251,22 +1252,30 @@ class MapScreenState extends State<MapScreen> {
                             mainAxisAlignment: MainAxisAlignment.end, children:[
                               Row(mainAxisAlignment: MainAxisAlignment.end,
                                 children:[
-                                  IconButton(
-                                    tooltip: "Measure distances and bearings",
-                                    onPressed: () {
-                                      setState(() {
-                                        if(_ruler.isMeasuring()) {
-                                          _ruler.init();
-                                        }
-                                        else {
-                                          _ruler.init();
-                                          _ruler.startMeasure();
-                                        }
-                                      });
-                                    },
-                                    icon: CircleAvatar(radius: iconRadius, backgroundColor: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
-                                      child: Icon(MdiIcons.mathCompass, color: _ruler.isMeasuring() ? Colors.red : Theme.of(context).colorScheme.primary, ))),
-
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: _ruler.isMeasuring() ? Theme.of(context).colorScheme.primary : Colors.transparent, width: iconBorder),
+                                      color: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    padding: const EdgeInsets.all(-iconBorder-5), // why 5?  Is that a default padding somewhere?
+                                    child: IconButton(
+                                      isSelected: _ruler.isMeasuring(),
+                                      tooltip: "Measure distances and bearings",
+                                      onPressed: () {
+                                        setState(() {
+                                          if(_ruler.isMeasuring()) {
+                                            _ruler.init();
+                                          }
+                                          else {
+                                            _ruler.init();
+                                            _ruler.startMeasure();
+                                          }
+                                        });
+                                      },
+                                      icon: CircleAvatar(radius: iconRadius, backgroundColor: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
+                                        child: Icon(MdiIcons.mathCompass, color: _ruler.isMeasuring() ? Colors.red : Theme.of(context).colorScheme.primary, ))),
+                                  ),
                                   // north up
                                   IconButton(
                                       onPressed: () {
@@ -1289,15 +1298,24 @@ class MapScreenState extends State<MapScreen> {
                                           }
                                       )),
 
-                                  IconButton(
-                                    tooltip: "Enable rubber banding",
-                                    onPressed: () {
-                                      setState(() {
-                                        Storage().settings.isRubberBanding() ? Storage().settings.setRubberBanding(false) : Storage().settings.setRubberBanding(true);
-                                      });
-                                    },
-                                    icon: CircleAvatar(radius: iconRadius, backgroundColor: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
-                                      child: Icon(MdiIcons.arrowDecisionOutline, color: Storage().settings.isRubberBanding() ? Colors.red : Theme.of(context).colorScheme.primary))),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Storage().settings.isRubberBanding() ? Theme.of(context).colorScheme.primary : Colors.transparent, width: iconBorder),
+                                      color: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    padding: const EdgeInsets.all(-iconBorder-5), // why 5?  Is that a default somewhere?
+                                    child: IconButton(
+                                      isSelected: Storage().settings.isRubberBanding(),
+                                      tooltip: "Enable rubber banding",
+                                      onPressed: () {
+                                        setState(() {
+                                          Storage().settings.isRubberBanding() ? Storage().settings.setRubberBanding(false) : Storage().settings.setRubberBanding(true);
+                                        });
+                                      },
+                                      icon: CircleAvatar(radius: iconRadius, backgroundColor: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
+                                        child: Icon(MdiIcons.arrowDecisionOutline, color: Storage().settings.isRubberBanding() ? Colors.red : Theme.of(context).colorScheme.primary))),
+                                  ),
 
                                   IconButton(
                                       tooltip: "Write a note",
