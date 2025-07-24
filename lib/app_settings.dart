@@ -16,6 +16,14 @@ class AppSettings {
     _localUnits = provider.getValue("key-units", defaultValue: _localUnits) as String;
   }
 
+  bool getPointersModeAll() {
+    return provider.getValue("key-pointers-mode-all", defaultValue: true) as bool;
+  }
+
+  void setPointersModeAll(bool pointersModeAll) {
+    provider.setBool("key-pointers-mode-all", pointersModeAll);
+  }
+
   void setChartType(String chart) {
     provider.setString("key-chart-v1", chart);
   }

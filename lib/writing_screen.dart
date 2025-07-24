@@ -36,6 +36,11 @@ class WritingScreenState extends State<WritingScreen> {
 
     notifier.setStrokeWidth(2);
     notifier.setColor(Theme.of(context).brightness == Brightness.light ? Colors.black: Colors.white);
+    if (Storage().settings.getPointersModeAll()) {
+      notifier.setAllowedPointersMode(ScribblePointerMode.all);
+    } else {
+      notifier.setAllowedPointersMode(ScribblePointerMode.penOnly);
+    }
     return FutureBuilder(
       future: UserDatabaseHelper.db.getSketch("Default"),
       builder: (context, snapshot) {
@@ -133,7 +138,15 @@ class WritingScreenState extends State<WritingScreen> {
           color: Colors.transparent,
           outlineColor: Theme.of(context).brightness == Brightness.light ? Colors.black: Colors.white,
           isActive: value,
-          onPressed: ()  {value ? notifier.setAllowedPointersMode(ScribblePointerMode.penOnly) : notifier.setAllowedPointersMode(ScribblePointerMode.all);},
+          onPressed: ()  {
+            if (value) {
+              Storage().settings.setPointersModeAll(false);
+              notifier.setAllowedPointersMode(ScribblePointerMode.penOnly);
+            } else {
+              Storage().settings.setPointersModeAll(true);
+              notifier.setAllowedPointersMode(ScribblePointerMode.all);
+            }
+          },
           child: const Icon(Icons.touch_app),
         ),
     );
