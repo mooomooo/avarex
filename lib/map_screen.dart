@@ -1265,7 +1265,7 @@ class MapScreenState extends State<MapScreen> {
                                       });
                                     },
                                     icon: CircleAvatar(radius: iconRadius, backgroundColor: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
-                                      child: Icon(MdiIcons.mathCompass, color: _ruler.color() == Colors.white ? Theme.of(context).colorScheme.primary : Colors.red, ))),
+                                      child: Icon(MdiIcons.mathCompass, color: _ruler.isMeasuring() ? Colors.red : Theme.of(context).colorScheme.primary, ))),
 
                                   // north up
                                   IconButton(
@@ -1486,13 +1486,6 @@ class Ruler {
     }
 
     return ret;
-  }
-
-  Color color() {
-    if(_measuring) {
-      return Colors.red;
-    }
-    return Colors.white;
   }
 
   void startMeasure() {
