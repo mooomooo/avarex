@@ -1273,8 +1273,9 @@ class MapScreenState extends State<MapScreen> {
                                           }
                                         });
                                       },
-                                      icon: CircleAvatar(radius: iconRadius, backgroundColor: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
-                                        child: Icon(MdiIcons.mathCompass, color: _ruler.isMeasuring() ? Colors.red : Theme.of(context).colorScheme.primary, ))),
+                                      icon: Icon(MdiIcons.mathCompass, color: Theme.of(context).colorScheme.primary),
+                                      selectedIcon: Icon(MdiIcons.mathCompass, color: Colors.red),
+                                    ),
                                   ),
                                   // north up
                                   IconButton(
@@ -1313,8 +1314,9 @@ class MapScreenState extends State<MapScreen> {
                                           Storage().settings.isRubberBanding() ? Storage().settings.setRubberBanding(false) : Storage().settings.setRubberBanding(true);
                                         });
                                       },
-                                      icon: CircleAvatar(radius: iconRadius, backgroundColor: Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
-                                        child: Icon(MdiIcons.arrowDecisionOutline, color: Storage().settings.isRubberBanding() ? Colors.red : Theme.of(context).colorScheme.primary))),
+                                      icon: Icon(MdiIcons.arrowDecisionOutline, color: Theme.of(context).colorScheme.primary),
+                                      selectedIcon: Icon(MdiIcons.arrowDecisionOutline, color: Colors.red),
+                                    ),
                                   ),
 
                                   IconButton(
